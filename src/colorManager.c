@@ -1,9 +1,9 @@
 #include "../include/colorManager.h"
 
 int* HSL2RGB(float h, float s, float l) {
-    float chroma = (1 - abs(2 * l - 1)) * s;
+    float chroma = (1 - fabs(2 * l - 1)) * s;
     float rgb_face_index = h / 60;
-    float x = (1 - abs(fmodf(rgb_face_index, 2.0) - 1)) * chroma;
+    float x = (1 - fabs(fmodf(rgb_face_index, 2.0) - 1)) * chroma;
 
     float r1 = 0, g1 = 0, b1 = 0;
     switch ((int)rgb_face_index) {
@@ -42,5 +42,16 @@ int* HSL2RGB(float h, float s, float l) {
 }
 
 int* _Hue2RGB(float h) {
-    return HSL2RGB(fmodf(h, MAX_Hue), SATURATION / MAX_SL, LIGHTNESS / MAX_SL);
+    return HSL2RGB(fmodf(h, MAX_Hue), (float)SATURATION / MAX_SL, (float)LIGHTNESS / MAX_SL);
+}
+
+Color ColorGenerator() {
+    int* rgb = _Hue2RGB(initialHue);
+    initialHue = (initialHue + HUE_STEP) % MAX_Hue;
+    return (Color) {
+        .r = rgb[0],
+        .g = rgb[1],
+        .b = rgb[2],
+        .a = 255
+    };
 }
