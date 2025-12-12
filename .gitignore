@@ -3,3 +3,6 @@
 
 # CMake Build Files
 build
+
+# Executable Files
+.exe

@@ -5,3 +5,8 @@ find_package(raylib CONFIG REQUIRED)
 
 add_executable(FallingSand src/falling_sand.c)
 target_link_libraries(FallingSand PRIVATE raylib)
+
+# project(ColorTest)
+# add_executable(ColorTest test/color_test.c)
+# add_executable(ColorTest src/colorManager.c)
+# target_link_libraries(ColorTest PRIVATE raylib)
