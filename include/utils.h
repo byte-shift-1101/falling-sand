@@ -7,18 +7,19 @@
 #include <math.h>
 #include <time.h>
 #include "raylib.h"
+#include "IntVector2.h"
 
 #define GRID_WIDTH 40
-#define GRID_HEIGHT 40
+#define GRID_HEIGHT 100
 #define GRID_BORDER 10
 #define CELL_SIZE 10
 
 #define SCREEN_WIDTH (GRID_WIDTH * CELL_SIZE + 2 * GRID_BORDER)
 #define SCREEN_HEIGHT (GRID_HEIGHT * CELL_SIZE + 2 * GRID_BORDER)
 
-typedef struct IntVector2 {
-    int x, y;
-} IntVector2;
+static Vector2 ZERO_VECTOR = {0.0f, 0.0f};
+static Vector2 GRAVITY = {0.0f, 0.05f};
+IntVector2 mouseCoords;
 
 inline IntVector2 Grid2Pixel(IntVector2 gridCoords) {
     int pixelX = GRID_BORDER + gridCoords.x * CELL_SIZE;
@@ -62,6 +63,7 @@ inline void InitSystem() {
 inline void SystemLoop() {
     ClearBackground(BLACK);
     deltaTime = GetFrameTime();
+    mouseCoords = (IntVector2) {GetMouseX(), GetMouseY()};
     DecrementCooldown();
 }
 

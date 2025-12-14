@@ -20,8 +20,7 @@ void LoopSimulation() {
     // Needs Refinement
     // 1. Contained in Grid Check (and overall check to see if init particle is allowed)
     // 2. Internal working of particleCount++ is a uneasy
-    if (IsMouseButtonDown(MOUSE_LEFT_BUTTON) && !IsInCooldown()) {
-        IntVector2 mouseCoords = (IntVector2) {GetMouseX(), GetMouseY()};
+    if (IsMouseButtonDown(MOUSE_LEFT_BUTTON) && !IsInCooldown() && particleCount < MAX_PARTICLES && IsPixelInGrid(mouseCoords) && !ParticleAt(particles, Pixel2Grid(mouseCoords))) {
         InitParticle(&particles[particleCount], mouseCoords);
         particleCount++;
         RestartCooldown();
@@ -29,7 +28,7 @@ void LoopSimulation() {
 
     for (int i = 0; i < particleCount; i++) {
         DrawParticle(&particles[i]);
-        SimulateFall(&particles[i]);
+        SimulateFall(&particles[i], particles);
     }
 }
 
